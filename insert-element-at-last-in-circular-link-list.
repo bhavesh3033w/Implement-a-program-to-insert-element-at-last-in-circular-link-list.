@@ -1,0 +1,96 @@
+# Implement-a-program-to-insert-element-at-last-in-circular-link-list.
+#include <iostream>
+using namespace std;
+
+// Node structure for Circular Linked List
+struct Node {
+    int data;
+    Node* next;
+
+    // Constructor to create a new node
+    Node(int val) {
+        data = val;
+        next = nullptr;
+    }
+};
+
+// Class for Circular Linked List
+class CircularLinkedList {
+private:
+    Node* head;
+
+public:
+    // Constructor to initialize the list
+    CircularLinkedList() {
+        head = nullptr;
+    }
+
+    // Function to insert a node at the last position
+    void insertAtLast(int value) {
+        Node* newNode = new Node(value);
+
+        if (head == nullptr) {  // If the list is empty
+            head = newNode;
+            head->next = head;  // Point to itself (single node)
+        } else {
+            Node* temp = head;
+            // Traverse to the last node
+            while (temp->next != head) {
+                temp = temp->next;
+            }
+            // Insert the new node at the end
+            temp->next = newNode;
+            newNode->next = head;  // Make the new node point to the head
+        }
+        cout << value << " inserted at the last." << endl;
+    }
+
+    // Function to display the list
+    void display() {
+        if (head == nullptr) {
+            cout << "List is empty!" << endl;
+            return;
+        }
+
+        Node* temp = head;
+        cout << "List: ";
+        do {
+            cout << temp->data << " ";
+            temp = temp->next;
+        } while (temp != head);  // Continue until we circle back to the head
+        cout << endl;
+    }
+};
+
+int main() {
+    CircularLinkedList list;
+    int choice, value;
+
+    do {
+        cout << "\nMenu:\n";
+        cout << "1. Insert at Last\n";
+        cout << "2. Display List\n";
+        cout << "3. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter value to insert at last: ";
+                cin >> value;
+                list.insertAtLast(value);
+                break;
+            case 2:
+                list.display();
+                break;
+            case 3:
+                cout << "Exiting program." << endl;
+                break;
+            default:
+                cout << "Invalid choice! Please try again." << endl;
+        }
+    } while (choice != 3);
+
+    return 0;
+}
+
